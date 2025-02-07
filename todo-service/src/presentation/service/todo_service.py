@@ -16,7 +16,7 @@ class TodoSerivce(todo_service_pb2_grpc.TodoServiceServicer):
             return todo_service_pb2.CreateTodoResponse(id=todo_id)
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details("Có lỗi xảy ra")
+            context.set_details(str(e))
             return todo_service_pb2.CreateTodoResponse()
     
     async def GetTodo(self, request: todo_service_pb2.GetTodoRequest, context) -> todo_service_pb2.GetTodoResponse:
@@ -34,7 +34,7 @@ class TodoSerivce(todo_service_pb2_grpc.TodoServiceServicer):
             return todo_service_pb2.GetTodoResponse()
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details("Có lỗi xảy ra")
+            context.set_details(str(e))
             return todo_service_pb2.GetTodoResponse()
     
     async def UpdateTodo(self, request: todo_service_pb2.UpdateTodoRequest, context) -> todo_service_pb2.UpdateTodoResponse:
@@ -52,7 +52,7 @@ class TodoSerivce(todo_service_pb2_grpc.TodoServiceServicer):
             return todo_service_pb2.UpdateTodoResponse()
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details("Có lỗi xảy ra")
+            context.set_details(str(e))
             return todo_service_pb2.UpdateTodoResponse()
     
     async def DeleteTodo(self, request: todo_service_pb2.DeleteTodoRequest, context) -> todo_service_pb2.DeleteTodoResponse:
@@ -65,5 +65,5 @@ class TodoSerivce(todo_service_pb2_grpc.TodoServiceServicer):
             return todo_service_pb2.DeleteTodoResponse()
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details("Có lỗi xảy ra")
+            context.set_details(str(e))
             return todo_service_pb2.DeleteTodoResponse()

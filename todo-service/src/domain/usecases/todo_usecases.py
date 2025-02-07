@@ -10,7 +10,8 @@ class TodoUsecases:
         
     async def create_todo(self, title: str, description: str):
         todo = TodoEntity(title=title, description=description)
-        return await self.todo_repository.create(todo=todo)
+        todo_model =  await self.todo_repository.create(todo=todo)
+        return todo_model.id
     
     async def get_todo(self, id: int):
         todo = await self.todo_repository.get_by_id(id=id)
