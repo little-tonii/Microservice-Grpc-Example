@@ -1,10 +1,10 @@
 import grpc
-from common.dependencies import container
-from common.exceptions.todo_not_found_exception import TodoNotFoundException
-from domain.usecases.todo_usecases import TodoUsecases
+from src.common.dependencies.container import container
+from src.common.exceptions.todo_not_found_exception import TodoNotFoundException
+from src.domain.usecases.todo_usecases import TodoUsecases
 from src.presentation.grpc.generated import todo_service_pb2, todo_service_pb2_grpc
 
-class TodoSerivce(todo_service_pb2_grpc.TodoServiceServicer):
+class TodoService(todo_service_pb2_grpc.TodoServiceServicer):
     todo_usecases: TodoUsecases
     
     def __init__(self):

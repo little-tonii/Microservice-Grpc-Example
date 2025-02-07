@@ -1,11 +1,12 @@
-from repositories.todo_repository import TodoRepository
-from entites.todo_entity import TodoEntity
+from src.data.repositories.todo_repository_impl import TodoRepositoryImpl
+from src.domain.repositories.todo_repository import TodoRepository
+from src.domain.entites.todo_entity import TodoEntity
 from src.common.exceptions.todo_not_found_exception import TodoNotFoundException
 
 class TodoUsecases:
     todo_repository: TodoRepository
     
-    def __init__(self, todo_repository: TodoRepository):
+    def __init__(self, todo_repository: TodoRepositoryImpl):
         self.todo_repository = todo_repository
         
     async def create_todo(self, title: str, description: str):

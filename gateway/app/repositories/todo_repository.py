@@ -18,4 +18,4 @@ class TodoRepository:
             description=description
         )
         response = await self.client.CreateTodo(request)
-        return 1
+        return response.id

@@ -1,5 +1,5 @@
-from data.models.todo_model import TodoModel
-from domain.entites.todo_entity import TodoEntity
+from src.data.models.todo_model import TodoModel
+from src.domain.entites.todo_entity import TodoEntity
 
 class TodoMapper:
 

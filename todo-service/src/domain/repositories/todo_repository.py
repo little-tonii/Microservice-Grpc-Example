@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional
-from entites.todo_entity import TodoEntity
+from src.domain.entites.todo_entity import TodoEntity
 
 class TodoRepository(ABC):
     
@@ -13,7 +13,7 @@ class TodoRepository(ABC):
         pass
     
     @abstractmethod
-    async def update(self, todo: TodoEntity) -> TodoEntity:
+    async def update(self, todo: TodoEntity) -> Optional[TodoEntity]:
         pass
     
     @abstractmethod

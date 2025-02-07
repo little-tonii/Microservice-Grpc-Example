@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, Integer, String
-from data.datasource.todo_database import Base
+from src.data.datasource.todo_database import Base
 
 
 class TodoModel(Base):
