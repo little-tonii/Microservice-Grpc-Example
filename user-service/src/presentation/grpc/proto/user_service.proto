@@ -1,0 +1,44 @@
+syntax="proto3";
+
+package user_service;
+
+service UserService {
+    rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserResponse) {}
+    rpc GetUserById(GetUserByIdRequest) returns (GetUserResponse) {}
+    rpc UpdateUser(UpdateUserRequest) returns (GetUserResponse) {}
+    rpc CreateUser(CreateUserRequest) returns (GetUserResponse) {}
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+}
+
+message GetUserByIdRequest {
+    int32 id = 1;
+}
+
+message GetUserByEmailRequest {
+    string email = 1;
+}
+
+message GetUserResponse {
+    int32 id = 1;
+    string email = 2;
+}
+
+message DeleteUserRequest {
+    int32 id = 1;
+}
+
+message DeleteUserResponse {
+    bool success = 1;
+}
+
+message CreateUserRequest {
+    string email = 1;
+    string hashed_password = 2;
+    string refresh_token = 3;
+}
+
+message UpdateUserRequest {
+    int32 id = 1;
+    optional string hashed_password = 2;
+    optional string refresh_token = 3;
+}
