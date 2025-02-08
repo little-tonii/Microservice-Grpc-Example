@@ -15,20 +15,12 @@ class UserGrpcService(user_service_pb2_grpc.UserServiceServicer):
     async def GetUserById(self, request, context: ServicerContext):
         try:
             user_entity = await self.user_usecases.get_user_by_id(id=request.id)
-            return user_service_pb2.GetUserResponse(id=user_entity.id, email=user_entity.email)
-        except DataNotFoundException as e:
-            context.set_code(grpc.StatusCode.NOT_FOUND)
-            context.set_details(e.message)
-            return user_service_pb2.GetUserResponse()
-        except Exception as e:
-            context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details(str(e))
-            return user_service_pb2.GetUserResponse()
-    
-    async def GetUserByEmail(self, request, context: ServicerContext):
-        try:
-            user_entity = await self.user_usecases.get_user_by_email(request.email)
-            return user_service_pb2.GetUserResponse(id=user_entity.id, email=user_entity.email)
+            return user_service_pb2.GetUserResponse(
+                id=user_entity.id, 
+                email=user_entity.email,
+                hashed_password=user_entity.hashed_password,
+                refresh_token=user_entity.refresh_token
+            )
         except DataNotFoundException as e:
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details(e.message)
@@ -45,7 +37,7 @@ class UserGrpcService(user_service_pb2_grpc.UserServiceServicer):
                 hashed_password=request.hashed_password if request.HasField('hashed_password') else None,
                 refresh_token=request.refresh_token if request.HasField('refresh_token') else None
             )
-            return user_service_pb2.GetUserResponse(id=updated_user.id, email=updated_user.email)
+            return user_service_pb2.UpdateUserResponse(id=updated_user.id, email=updated_user.email)
         except DataNotFoundException as e:
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details(e.message)
@@ -60,9 +52,8 @@ class UserGrpcService(user_service_pb2_grpc.UserServiceServicer):
             new_user = await self.user_usecases.create_user(
                 email=request.email,
                 hashed_password=request.hashed_password,
-                refresh_token=request.refresh_token
             )
-            return user_service_pb2.GetUserResponse(id=new_user.id, email=new_user.email)
+            return user_service_pb2.CreateUserResponse(id=new_user.id, email=new_user.email)
         except UserAlreadyExistsException as e:
             context.set_code(grpc.StatusCode.ALREADY_EXISTS)
             context.set_details(e.message)

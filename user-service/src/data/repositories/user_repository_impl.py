@@ -23,15 +23,6 @@ class UserRepositoryImpl(UserRepository):
                 return None
             return UserMapper.map_to_entity(user_model=user_model)
     
-    async def get_by_email(self, email: str) -> Optional[UserEntity]:
-        async with self.database_session as session:
-            query = select(UserModel).where(UserModel.email == email)
-            result = await session.execute(query)
-            user_model = result.scalar_one_or_none()
-            if not user_model:
-                return None
-            return UserMapper.map_to_entity(user_model=user_model)
-    
     async def update(self, user_entity: UserEntity) -> UserEntity:
         async with self.database_session as session:
             async with session.begin(): 

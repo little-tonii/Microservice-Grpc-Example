@@ -6,4 +6,4 @@ class UserEntity:
     id: Optional[int] = None
     email: str = ""
     hashed_password: str = ""
-    refresh_token: str = ""
+    refresh_token: Optional[str] = None

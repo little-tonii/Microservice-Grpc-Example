@@ -34,25 +34,20 @@ class UserServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetUserByEmail = channel.unary_unary(
-                '/user_service.UserService/GetUserByEmail',
-                request_serializer=user__service__pb2.GetUserByEmailRequest.SerializeToString,
-                response_deserializer=user__service__pb2.GetUserResponse.FromString,
-                _registered_method=True)
         self.GetUserById = channel.unary_unary(
                 '/user_service.UserService/GetUserById',
                 request_serializer=user__service__pb2.GetUserByIdRequest.SerializeToString,
-                response_deserializer=user__service__pb2.GetUserResponse.FromString,
+                response_deserializer=user__service__pb2.GetUserByIdResponse.FromString,
                 _registered_method=True)
         self.UpdateUser = channel.unary_unary(
                 '/user_service.UserService/UpdateUser',
                 request_serializer=user__service__pb2.UpdateUserRequest.SerializeToString,
-                response_deserializer=user__service__pb2.GetUserResponse.FromString,
+                response_deserializer=user__service__pb2.UpdateUserResponse.FromString,
                 _registered_method=True)
         self.CreateUser = channel.unary_unary(
                 '/user_service.UserService/CreateUser',
                 request_serializer=user__service__pb2.CreateUserRequest.SerializeToString,
-                response_deserializer=user__service__pb2.GetUserResponse.FromString,
+                response_deserializer=user__service__pb2.CreateUserResponse.FromString,
                 _registered_method=True)
         self.DeleteUser = channel.unary_unary(
                 '/user_service.UserService/DeleteUser',
@@ -63,12 +58,6 @@ class UserServiceStub(object):
 
 class UserServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
-
-    def GetUserByEmail(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
 
     def GetUserById(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -97,25 +86,20 @@ class UserServiceServicer(object):
 
 def add_UserServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetUserByEmail': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetUserByEmail,
-                    request_deserializer=user__service__pb2.GetUserByEmailRequest.FromString,
-                    response_serializer=user__service__pb2.GetUserResponse.SerializeToString,
-            ),
             'GetUserById': grpc.unary_unary_rpc_method_handler(
                     servicer.GetUserById,
                     request_deserializer=user__service__pb2.GetUserByIdRequest.FromString,
-                    response_serializer=user__service__pb2.GetUserResponse.SerializeToString,
+                    response_serializer=user__service__pb2.GetUserByIdResponse.SerializeToString,
             ),
             'UpdateUser': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateUser,
                     request_deserializer=user__service__pb2.UpdateUserRequest.FromString,
-                    response_serializer=user__service__pb2.GetUserResponse.SerializeToString,
+                    response_serializer=user__service__pb2.UpdateUserResponse.SerializeToString,
             ),
             'CreateUser': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateUser,
                     request_deserializer=user__service__pb2.CreateUserRequest.FromString,
-                    response_serializer=user__service__pb2.GetUserResponse.SerializeToString,
+                    response_serializer=user__service__pb2.CreateUserResponse.SerializeToString,
             ),
             'DeleteUser': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteUser,
@@ -134,33 +118,6 @@ class UserService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetUserByEmail(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/user_service.UserService/GetUserByEmail',
-            user__service__pb2.GetUserByEmailRequest.SerializeToString,
-            user__service__pb2.GetUserResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def GetUserById(request,
             target,
             options=(),
@@ -176,7 +133,7 @@ class UserService(object):
             target,
             '/user_service.UserService/GetUserById',
             user__service__pb2.GetUserByIdRequest.SerializeToString,
-            user__service__pb2.GetUserResponse.FromString,
+            user__service__pb2.GetUserByIdResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -203,7 +160,7 @@ class UserService(object):
             target,
             '/user_service.UserService/UpdateUser',
             user__service__pb2.UpdateUserRequest.SerializeToString,
-            user__service__pb2.GetUserResponse.FromString,
+            user__service__pb2.UpdateUserResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -230,7 +187,7 @@ class UserService(object):
             target,
             '/user_service.UserService/CreateUser',
             user__service__pb2.CreateUserRequest.SerializeToString,
-            user__service__pb2.GetUserResponse.FromString,
+            user__service__pb2.CreateUserResponse.FromString,
             options,
             channel_credentials,
             insecure,
