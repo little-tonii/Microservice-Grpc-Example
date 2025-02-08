@@ -16,11 +16,6 @@ class UserRepository:
         response = await self.user_grpc_client.GetUserById(request)
         return UserEntity(id=response.id, email=response.email)
         
-    async def get_by_email(self, email: str) -> UserEntity:
-        request = user_service_pb2.GetUserByEmailRequest(email=email)
-        response = await self.user_grpc_client.GetUserByEmail(request)
-        return UserEntity(id=response.id, email=response.email)
-        
     async def update(self, id: int, hashed_password: Optional[str], refresh_token: Optional[str]) -> UserEntity:
         request = user_service_pb2.UpdateUserRequest(id=id)
         if hashed_password:
