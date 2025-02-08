@@ -1,12 +1,9 @@
 import grpc
-
-from app.grpc.generated import todo_service_pb2_grpc
-
+from app.grpc.generated import user_service_pb2_grpc
 
 class ClientAdresses:
-    TODO_SERVICE: str = "localhost:50051"
-
-
-async def todo_grpc_client():
+    USER_SERVICE: str = "localhost:50000"
+    
+async def get_user_grpc_client():
     channel = grpc.aio.insecure_channel(ClientAdresses.TODO_SERVICE)
-    return todo_service_pb2_grpc.TodoServiceStub(channel=channel)
+    return user_service_pb2_grpc.TodoServiceStub(channel=channel)

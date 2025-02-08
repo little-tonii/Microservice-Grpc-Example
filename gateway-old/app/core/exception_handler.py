@@ -4,7 +4,6 @@ from fastapi.responses import JSONResponse
 import grpc
 from starlette import status
 from grpc.aio import AioRpcError
-
 from app.schemas.responses.error_schema_response import ErrorResponse, ErrorsResponse
 
 
@@ -13,12 +12,9 @@ async def handle_grpc_exception(exception: AioRpcError):
     message = exception.details()
     if status_code == grpc.StatusCode.NOT_FOUND:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=message)
-    elif status_code == grpc.StatusCode.ALREADY_EXISTS:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=message)
-    elif status_code == grpc.StatusCode.INVALID_ARGUMENT:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=message)
     else:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=message)
+
 
 async def http_exception_handler(request: Request, exc: HTTPException):
     message = exc.detail
@@ -40,5 +36,5 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 async def global_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
         status_code=500, 
-        content=ErrorResponse(message="Có lỗi xảy ra").model_dump()
+        content=ErrorResponse(message=str(exc)).model_dump()
     )

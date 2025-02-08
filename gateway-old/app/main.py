@@ -1,13 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import user_api
+from app.api import todo_api, user_api
 from app.core.exception_handler import global_exception_handler, http_exception_handler, validation_exception_handler
-from app.db.database import Base, engine
 
 app = FastAPI()
-
-Base.metadata.create_all(bind=engine)
 
 origins = [
     "*"
@@ -22,6 +19,7 @@ app.add_middleware(
 )
 
 app.include_router(user_api.router)
+app.include_router(todo_api.router)
 
 app.add_exception_handler(HTTPException, http_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
