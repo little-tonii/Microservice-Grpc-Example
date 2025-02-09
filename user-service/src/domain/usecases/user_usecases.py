@@ -17,7 +17,7 @@ class UserUsecases:
             raise DataNotFoundException(message="Không tìm thấy người dùng")
         return user_entity
     
-    async def update_user(self, id: int, hashed_password: Optional[str], refresh_token: Optional[str]) -> UserEntity:
+    async def update_user(self, id: int, hashed_password: Optional[str], refresh_token: Optional[str]) -> int:
         user_entity = await self.user_repository.get_by_id(id=id)
         if not user_entity:
             raise DataNotFoundException("Không tìm thấy người dùng")
@@ -25,10 +25,9 @@ class UserUsecases:
             user_entity.hashed_password = hashed_password
         if refresh_token:
             user_entity.refresh_token = refresh_token
-        updated_user = await self.user_repository.update(user_entity=user_entity)
-        return updated_user
+        return await self.user_repository.update(user_entity=user_entity)
     
-    async def create_user(self, email: str, hashed_password: str) -> UserEntity:
+    async def create_user(self, email: str, hashed_password: str) -> int:
         existed_user = await self.user_repository.get_by_email(email=email)
         if existed_user:
             raise UserAlreadyExistsException(email=email)

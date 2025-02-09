@@ -22,22 +22,31 @@ class UserRepositoryImpl(UserRepository):
             if not user_model:
                 return None
             return UserMapper.map_to_entity(user_model=user_model)
+        
+    async def get_by_email(self, email: str) -> Optional[UserEntity]:
+        async with self.database_session as session:
+            query = select(UserModel).where(UserModel.email == email)
+            result = await session.execute(query)
+            user_model = result.scalar_one_or_none()
+            if not user_model:
+                return None
+            return UserMapper.map_to_entity(user_model=user_model)
     
-    async def update(self, user_entity: UserEntity) -> UserEntity:
+    async def update(self, user_entity: UserEntity) -> int:
         async with self.database_session as session:
             async with session.begin(): 
                 user_model = UserMapper.map_to_model(user_entity=user_entity)
                 updated_model = await session.merge(user_model)
-            return UserMapper.map_to_entity(user_model=updated_model)
+            return UserMapper.map_to_entity(user_model=updated_model).id
     
-    async def create(self, user_entity: UserEntity) -> UserEntity:
+    async def create(self, user_entity: UserEntity) -> int:
         async with self.database_session as session:
             async with session.begin():
                 user_model = UserMapper.map_to_model(user_entity=user_entity)
                 session.add(user_model)
             await session.refresh(user_model)
             user_entity.id = user_model.id
-            return user_entity
+            return user_entity.id
     
     async def delete_by_id(self, id: int) -> bool:
         async with self.database_session as session:
