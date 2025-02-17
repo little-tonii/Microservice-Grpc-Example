@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from domain.entities.todo_entity import TodoEntity
+from src.domain.entities.todo_entity import TodoEntity
 
 @dataclass
 class UpdateTodoRequest:

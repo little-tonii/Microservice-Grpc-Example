@@ -1,13 +1,13 @@
 from typing import Optional
 
 from sqlalchemy import select
-from domain.entities.todo_entity import TodoEntity
-from domain.repositories.todo_repository import TodoRepository
+from src.domain.entities.todo_entity import TodoEntity
+from src.domain.repositories.todo_repository import TodoRepository
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 
-from infastructure.models.todo_model import TodoModel
+from src.infastructure.models.todo_model import TodoModel
 
 class TodoRepositoryImpl(TodoRepository):
     session_factory: sessionmaker[AsyncSession]
